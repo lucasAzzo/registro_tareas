@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo_operacion %}Requerimientos{% endblock %}
+{% block breadcrumbs %}
+        <li><a class="active">Inicio</a></li>
+        <li href="#">Nuevo Requerimiento</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card-panel">
+
+            {{ form_start(formulario) }}
+
+            {{ form_errors(formulario) }}
+
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form_label(formulario.codigo) }}
+                    {{ form_widget(formulario.codigo) }}
+                </div>
+                <div class="col s6">
+                    {{ form_label(formulario.idArea) }}
+                    {{ form_widget(formulario.idArea) }}
+                </div>
+            </div>     
+
+            <div class="row">
+                <a type="button" href="{{path('requerimiento_index')}}" class="btn waves-effect waves-light red accent-2">Volver</a>
+                <input type="submit" value="Guardar" class="btn"/>
+            </div>
+
+            {{ form_end(formulario) }}
+        </div>
+    </div>
+
+{% endblock %}
+

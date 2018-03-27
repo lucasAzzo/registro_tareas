@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo_operacion %}Tareas{% endblock %}
+{% block breadcrumbs %}
+        <li><a class="active">Inicio</a></li>
+        <li href="#">Nueva Tarea</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card-panel">
+
+            {{ form_start(formulario) }}
+
+            {{ form_errors(formulario) }}
+
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form_label(formulario.tarea) }}
+                    {{ form_widget(formulario.tarea) }}
+                </div>
+                <div class="col s2">
+                    {{ form_label(formulario.fecha) }}
+                    {{ form_widget(formulario.fecha) }}
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class="col s3">
+                    {{ form_label(formulario.horaInicio) }}
+                    {{ form_widget(formulario.horaInicio) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(formulario.horaFin) }}
+                    {{ form_widget(formulario.horaFin) }}
+                </div>
+                <div class="col s3">
+                    {{ form_label(formulario.horaInvertida) }}
+                    {{ form_widget(formulario.horaInvertida) }}
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class="col s6">
+                    {{ form_label(formulario.idTipoRequerimiento) }}
+                    {{ form_widget(formulario.idTipoRequerimiento) }}
+                </div>
+                <div class="col s6">
+                    {{ form_label(formulario.idRequerimiento) }}
+                    {{ form_widget(formulario.idRequerimiento) }}
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class="col s6">
+                    {{ form_label(formulario.idArea) }}
+                    {{ form_widget(formulario.idArea) }}
+                </div>
+            </div> 
+                
+            <br>
+            
+            <div class="row">
+                <a type="button" href="{{path('tarea_index')}}" class="btn waves-effect waves-light red accent-2">Volver</a>
+                <input type="submit" value="Guardar" class="btn"/>
+            </div>
+
+            {{ form_end(formulario) }}
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo_operacion %}Tareas{% endblock %}
+{% block breadcrumbs %}
+        <li><a href="#">Inicio</a></li>
+        <li class="active">Tareas</li>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="card-panel">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tarea</th>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                        <th>Hora invertida</th>
+                        <th>Tipo</th>
+                        <th>Req. Asoc.</th>
+                        <th>Área</th>
+                        <th>
+                            <a class="btn-floating waves-effect waves-light green darken-1" type="button" href="{{path('tarea_new')}}"><i class="material-icons">add</i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tarea in tareas %}
+                        <tr>
+                            <td>{{tarea.fecha|date('d/m/Y')}}</td>
+                            <td>{{tarea.tarea}}</td>
+                            <td>{{tarea.horaInicio}}</td>
+                            <td>{{tarea.horaFin}}</td>
+                            <td>{{tarea.horaInvertida}}</td>
+                            <td>{{tarea.idTipoRequerimiento.tipoRequerimiento}}</td>
+                            <td>{{tarea.idRequerimiento.codigo}}</td>
+                            <td>{{tarea.idArea.area}}</td>
+                            <td>
+                                <a class="btn-floating waves-effect waves-light cyan" type="button" href="{{path('tarea_edit',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">mode_edit</i></a>
+                                <a class="btn-floating waves-effect waves-light red" type="button" href="{{path('tarea_delete',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">clear</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>    
+    </div>            
+{% endblock %}

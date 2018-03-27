@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo_operacion %}Requerimientos{% endblock %}
+{% block breadcrumbs %}
+        <li><a href="#">Inicio</a></li>
+        <li class="active">Requerimientos</li>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="card-panel">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Área</th>
+                        <th>
+                            <a class="btn-floating waves-effect waves-light green darken-1" type="button" href="{{path('requerimiento_new')}}"><i class="material-icons">add</i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for requerimiento in requerimientos %}
+                        <tr>
+                            <td>{{requerimiento.codigo}}</td>
+                            <td>{{requerimiento.idArea.area}}</td>
+                            <td>
+                                <a class="btn-floating waves-effect waves-light cyan" type="button" href="{{path('requerimiento_edit',{'_id_requerimiento':requerimiento.idRequerimiento})}}"><i class="material-icons">mode_edit</i></a>
+                                <a class="btn-floating waves-effect waves-light red" type="button" href="{{path('requerimiento_delete',{'_id_requerimiento':requerimiento.idRequerimiento})}}"><i class="material-icons">clear</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>    
+    </div>            
+{% endblock %}
+ 

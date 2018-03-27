@@ -1,0 +1,27 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <div id="card-alert" class="card red">
+            {%- for error in errors -%}
+                <div class="card-content white-text"><p>{{ error.message }}</p></div>
+                <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            {%- endfor -%}
+        </div>
+    {%- endif %}
+{%- endblock form_errors %}
+
+
+{% block form_label -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'legend' -%}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-legend text-muted')|trim}) -%}
+    {%- else -%}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-control-label text-muted')|trim}) -%}
+    {%- endif -%}
+    {{- parent() -}}
+{%- endblock form_label %}
+
+
