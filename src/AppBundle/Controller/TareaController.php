@@ -32,7 +32,10 @@ class TareaController extends Controller {
     public function indexAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
-        $tareas = $em->getRepository(Tarea::class)->findAll();
+        
+        $usr= $this->get('security.token_storage')->getToken()->getUser();
+        
+        $tareas = $em->getRepository(Tarea::class)->findBy(['idUsuario' => $usr]);
         
         return $this->render('tarea/index.html.twig', [
                     'tareas' => $tareas,
@@ -74,8 +77,10 @@ class TareaController extends Controller {
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
+            $tarea->setIdUsuario($this->get('security.token_storage')->getToken()->getUser());
             $em->persist($tarea);
             $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Se ha creado la tarea : "' . $tarea->getTarea() . '" satisfactoriamente.');
             return $this->redirectToRoute('tarea_index');
         }
 
@@ -120,8 +125,10 @@ class TareaController extends Controller {
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
+            $tarea->setIdUsuario($this->get('security.token_storage')->getToken()->getUser());
             $em->persist($tarea);
             $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Se ha editado la tarea : "' . $tarea->getTarea() . '" satisfactoriamente.');
             return $this->redirectToRoute('tarea_index');
         }
 
@@ -133,7 +140,6 @@ class TareaController extends Controller {
     /**
      * @Route("/tareas/delete/{_id_tarea}", name="tarea_delete")
      * @Security("has_role('ROLE_ADMIN')")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, $_id_tarea) {
         
@@ -143,6 +149,7 @@ class TareaController extends Controller {
         $em->remove($tarea);
         $em->flush();
         
+        $request->getSession()->getFlashBag()->add('success', 'Se ha eliminado la tarea : "' . $tarea->getTarea() . '" satisfactoriamente.');
         return $this->redirectToRoute('tarea_index');
     }
     
