@@ -154,7 +154,7 @@ class Tarea {
         $this->idTipoRequerimiento = $idTipoRequerimiento;
     }
 
-    public function setIdRequerimiento(\AppBundle\Entity\Requerimiento $idRequerimiento) {
+    public function setIdRequerimiento(\AppBundle\Entity\Requerimiento $idRequerimiento = null) {
         $this->idRequerimiento = $idRequerimiento;
     }
 

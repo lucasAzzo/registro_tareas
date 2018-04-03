@@ -231,7 +231,39 @@
         <!--custom-script.js - Add your own theme custom JS-->
         <script type="text/javascript" src="{{ asset('js/custom-script.js') }}"></script>
         
-
+        <script>
+            $('.timepicker').pickatime({
+                default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+                fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+                twelvehour: false, // Use AM/PM or 24-hour format
+                donetext: 'OK', // text for done-button
+                cleartext: 'Clear', // text for clear-button
+                canceltext: 'Cancel', // Text for cancel-button,
+                container: undefined, // ex. 'body' will append picker to body
+                autoclose: false, // automatic close timepicker
+                ampmclickable: true, // make AM PM clickable
+                format: 'ampm',
+                aftershow: function(){} //Function for after opening timepicker
+            });
+            
+            $('.datepicker').pickadate({
+                selectMonths: true, 
+                selectYears: true, 
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Ok',
+                closeOnSelect: false,
+                monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+                weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado' ],
+                weekdaysLetter: [ 'Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa' ],
+                formatSubmit: 'yyyy-mm-dd',
+                format: 'yyyy-mm-dd',
+                container: undefined
+            });
+            
+        </script>    
+        
         {% block formulario_js %}<script src="{{ asset('js/formulario.js') }}"></script>{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

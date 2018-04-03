@@ -29,11 +29,11 @@
                         <tr>
                             <td>{{tarea.fecha|date('d/m/Y')}}</td>
                             <td>{{tarea.tarea}}</td>
-                            <td>{{tarea.horaInicio}}</td>
-                            <td>{{tarea.horaFin}}</td>
-                            <td>{{tarea.horaInvertida}}</td>
-                            <td>{{tarea.idTipoRequerimiento.tipoRequerimiento}}</td>
-                            <td>{{tarea.idRequerimiento.codigo}}</td>
+                            <td>{{tarea.horaInicio|date('H:i')}}</td>
+                            <td>{{tarea.horaFin|date('H:i')}}</td>
+                            <td>{{tarea.horaInvertida|date('H:i')}}</td>
+                            <td>{{tarea.idTipoRequerimiento}}</td>
+                            <td>{{tarea.idRequerimiento}}</td>
                             <td>{{tarea.idArea.area}}</td>
                             <td>
                                 <a class="btn-floating waves-effect waves-light cyan" type="button" href="{{path('tarea_edit',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">mode_edit</i></a>

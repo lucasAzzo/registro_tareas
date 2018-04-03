@@ -72,12 +72,16 @@ class TareaController extends Controller {
                 TareaType::class, $tarea, array('action' => $this->generateUrl('tarea_create'),
             'method' => 'POST')
         );
-
+        
         $formulario->handleRequest($request);
-
+        
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
             $tarea->setIdUsuario($this->get('security.token_storage')->getToken()->getUser());
+            
+            $hora_invertida = new \DateTime('2018-05-05 '.$tarea->getHoraFin()->diff($tarea->getHoraInicio())->format('%H:%I:%S'));
+            $tarea->setHoraInvertida($hora_invertida);
+            
             $em->persist($tarea);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Se ha creado la tarea : "' . $tarea->getTarea() . '" satisfactoriamente.');
@@ -126,6 +130,10 @@ class TareaController extends Controller {
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
             $tarea->setIdUsuario($this->get('security.token_storage')->getToken()->getUser());
+            
+            $hora_invertida = new \DateTime('2018-05-05 '.$tarea->getHoraFin()->diff($tarea->getHoraInicio())->format('%H:%I:%S'));
+            $tarea->setHoraInvertida($hora_invertida);
+            
             $em->persist($tarea);
             $em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Se ha editado la tarea : "' . $tarea->getTarea() . '" satisfactoriamente.');

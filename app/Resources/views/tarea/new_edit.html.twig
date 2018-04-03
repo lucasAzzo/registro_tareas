@@ -34,10 +34,6 @@
                     {{ form_label(formulario.horaFin) }}
                     {{ form_widget(formulario.horaFin) }}
                 </div>
-                <div class="col s3">
-                    {{ form_label(formulario.horaInvertida) }}
-                    {{ form_widget(formulario.horaInvertida) }}
-                </div>
             </div>
                 
             <div class="row">
@@ -70,4 +66,31 @@
     </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        var $requerimiento = $('#tarea_idRequerimiento');
+        $requerimiento.change(function() {
+          var $id_requerimiento = $requerimiento.val();
+          var data = {};
+          data['id'] = $id_requerimiento;
+          
+          $.ajax({
+            url : '{{path('consulta_area_requerimiento')}}',
+            type: 'POST',
+            data : data,
+            success: function(response) {
+                
+                var $area = $('#tarea_idArea');
+                $area.find('option').remove().end();
+                
+                for (var key in response) {
+                    $area.append('<option value="' + key + '">' + response[key] + '</option>');
+                }
+                
+            }
+          });
+        });
+    </script>
+{% endblock %}    
 

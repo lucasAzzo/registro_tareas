@@ -41,7 +41,7 @@ class Requerimiento {
     /**
      * @var \AppBundle\Entity\Area
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Area")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Area",fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_area", referencedColumnName="id_area")
      * })
@@ -70,6 +70,10 @@ class Requerimiento {
 
     public function setIdArea(\AppBundle\Entity\Area $idArea) {
         $this->idArea = $idArea;
+    }
+    
+    public function __toString() {
+        return $this->codigo;
     }
 
 

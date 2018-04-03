@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\AbstractType;
 use AppBundle\Entity\Tarea;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\EventSubscriber\RequerimientoFieldSubscriber;
 
 /**
  * Description of TareaType
@@ -31,34 +32,29 @@ class TareaType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('fecha', DateType::class, array(
-                    'widget' => 'choice',
-                    'html5' => false,
-                    'attr' => array('class' => 'browser-default'),  
-                    'days' => range(1,31),
-                    'years' => range(2018,2025),
+                    'widget' => 'single_text',
+                    'attr' => array('class' => 'datepicker'),  
                     'label' => 'Fecha',
                 ))
                 ->add('tarea', TextType::class)
-                ->add('idArea', EntityType::class, array(
-                    'placeholder' => 'Seleccione una opción',
-                    'class' => 'AppBundle:Area',
-                    'attr' => array('class' => 'browser-default'),   
-                    'choice_label' => 'area',
-                    'label' => 'Área'))
+                ->addEventSubscriber(new RequerimientoFieldSubscriber())
                 ->add('idRequerimiento', EntityType::class, array(
                     'placeholder' => 'Seleccione una opción',
+                    'attr' => array('class' => 'browser-default'),  
                     'class' => 'AppBundle:Requerimiento',
-                    'attr' => array('class' => 'browser-default'),   
+                    'required' => false,
+                    //'attr' => array('class' => 'browser-default'),   
                     'choice_label' => 'codigo',
                     'label' => 'Requerimiento'))
                 ->add('idTipoRequerimiento', EntityType::class, array(
                     'placeholder' => 'Seleccione una opción',
+                    'attr' => array('class' => 'browser-default'),  
                     'class' => 'AppBundle:TipoRequerimiento',
-                    'attr' => array('class' => 'browser-default'),   
+                    //'attr' => array('class' => 'browser-default'),   
                     'label' => 'Tipo de Requerimiento'))
-                ->add('horaInicio', TimeType::class,array('attr' => array('class' => 'browser-default')))
-                ->add('horaFin', TimeType::class,array('attr' => array('class' => 'browser-default')))
-                ->add('horaInvertida', TimeType::class,array('attr' => array('class' => 'browser-default')));
+                ->add('horaInicio', TimeType::class,array('widget' => 'single_text','attr' => array('class' => 'timepicker')))
+                ->add('horaFin', TimeType::class,array('widget' => 'single_text','attr' => array('class' => 'timepicker')));
+                //->add('horaInvertida', TimeType::class,array('attr' => array('class' => 'browser-default')));
     }
 
     /**
