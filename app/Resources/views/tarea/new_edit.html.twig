@@ -69,8 +69,17 @@
 
 {% block javascripts %}
     <script>
-        var $requerimiento = $('#tarea_idRequerimiento');
-        $requerimiento.change(function() {
+        
+        $(document).ready(function() {
+            obtenerAreas();
+        });
+        
+        $('#tarea_idRequerimiento').change(function() {
+          obtenerAreas();
+        });
+        
+        function obtenerAreas(){
+          var $requerimiento = $('#tarea_idRequerimiento');  
           var $id_requerimiento = $requerimiento.val();
           var data = {};
           data['id'] = $id_requerimiento;
@@ -90,7 +99,7 @@
                 
             }
           });
-        });
+        }
     </script>
 {% endblock %}    
 
