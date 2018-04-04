@@ -6,6 +6,26 @@
         <li class="active">Tareas</li>
 {% endblock %}
 {% block body %}
+    
+    {#<div class="container">
+        <div class="card-panel">
+            <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tarea</th>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Hora invertida</th>
+                    <th>Tipo</th>
+                    <th>Req. Asoc.</th>
+                    <th>Área</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>     #}
+
     <div class="container">
         <div class="card-panel">
             <table class="striped">
@@ -33,7 +53,7 @@
                             <td>{{tarea.horaFin|date('H:i')}}</td>
                             <td>{{tarea.horaInvertida|date('H:i')}}</td>
                             <td>{{tarea.idTipoRequerimiento}}</td>
-                            <td>{{tarea.idRequerimiento}}</td>
+                            <td>{% if tarea.idRequerimiento is not empty %}{{tarea.idRequerimiento.codigo}}{% endif %}</td>
                             <td>{{tarea.idArea.area}}</td>
                             <td>
                                 <a class="btn-floating waves-effect waves-light cyan" type="button" href="{{path('tarea_edit',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">mode_edit</i></a>
@@ -44,5 +64,62 @@
                 </tbody>
             </table>
         </div>    
-    </div>            
+    </div>           
 {% endblock %}
+
+{% block javascripts %}
+    {#<script type="text/javascript" language="javascript" class="init">
+            var editor; // use a global for the submit and return data rendering in the examples
+            $(document).ready(function() {
+                console.log({{tareas|json_encode()}});
+                
+                $('#example').DataTable( {
+                    data: {{tareas|json_encode()}},
+                    language:{
+                        select: {
+                            rows: {
+                                _: "%d Registros seleccionados",
+                                0: "Haga clic en la fila para seleccionar",
+                                1: "1 Registro seleccionado"
+                                }
+                            },
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                        "sInfo":           "_START_ al _END_ de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Buscar:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "Primero",
+                            "sLast":     "Último",
+                            "sNext":     "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    },
+                    dom: "Bfrtip",
+                    columns: [
+                        { data: "fecha" },
+                        { data: "tarea" },
+                        { data: "hora_inicio" },
+                        { data: "hora_fin" },
+                        { data: "hora_invertida" },
+                        { data: "tipo_requerimiento" },
+                        { data: "requerimiento" },
+                        { data: "area" }
+                        
+                    ],
+                    select: true,
+                } );
+            } );
+    </script>#}
+{% endblock %}    

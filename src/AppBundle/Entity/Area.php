@@ -54,6 +54,10 @@ class Area {
     public function setArea($area) {
         $this->area = $area;
     }
+    
+    public function __toString() {
+        return $this->area;
+    }
 
 
     

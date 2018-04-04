@@ -73,7 +73,7 @@ class Requerimiento {
     }
     
     public function __toString() {
-        return $this->codigo;
+        return $this->codigo . ' - ' . $this->idArea;
     }
 
 

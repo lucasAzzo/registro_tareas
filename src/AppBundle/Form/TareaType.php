@@ -44,7 +44,7 @@ class TareaType extends AbstractType {
                     'class' => 'AppBundle:Requerimiento',
                     'required' => false,
                     //'attr' => array('class' => 'browser-default'),   
-                    'choice_label' => 'codigo',
+                    //'choice_label' => 'codigo',
                     'label' => 'Requerimiento'))
                 ->add('idTipoRequerimiento', EntityType::class, array(
                     'placeholder' => 'Seleccione una opción',
