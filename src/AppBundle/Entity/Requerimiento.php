@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Lucas
  * @ORM\Table(name="requerimiento")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RequerimientoRepository")
  */
 class Requerimiento {
     

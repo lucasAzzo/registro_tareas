@@ -37,5 +37,31 @@ class Consultas extends Controller {
 
         return new JsonResponse($arreglo);
     }
+    
+    
+    /**
+     * @Route("/consulta_tareas_usuario", name="consulta_tareas_usuario")
+     * 
+     */
+    public function tareasPorUsuario(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $tareas = $em->getRepository('AppBundle:Tarea')->findByArrayResult($this->get('security.token_storage')->getToken()->getUser()->getId());
+
+        return new JsonResponse(array('data' => $tareas));
+    }
+    
+    
+    /**
+     * @Route("/consulta_requerimientos", name="consulta_requerimientos")
+     * 
+     */
+    public function requerimientos(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $requerimientos = $em->getRepository('AppBundle:Requerimiento')->findByArrayResult();
+
+        return new JsonResponse(array('data' => $requerimientos));
+    }
 
 }
