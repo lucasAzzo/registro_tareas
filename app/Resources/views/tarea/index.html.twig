@@ -7,7 +7,7 @@
 {% endblock %}
 {% block body %}
     
-    {#<div class="container">
+    <div class="container">
         <div class="card-panel">
             <table id="example" class="display" cellspacing="0" width="100%">
                 <thead>
@@ -20,61 +20,21 @@
                     <th>Tipo</th>
                     <th>Req. Asoc.</th>
                     <th>Área</th>
+                    <th><a href="{{path('tarea_new')}}" type="button"><i class="material-icons small">add</i></a></th>
                 </tr>
                 </thead>
             </table>
         </div>
-    </div>     #}
-
-    <div class="container">
-        <div class="card-panel">
-            <table class="striped">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Tarea</th>
-                        <th>Desde</th>
-                        <th>Hasta</th>
-                        <th>Hora invertida</th>
-                        <th>Tipo</th>
-                        <th>Req. Asoc.</th>
-                        <th>Área</th>
-                        <th>
-                            <a class="btn-floating waves-effect waves-light green darken-1" type="button" href="{{path('tarea_new')}}"><i class="material-icons">add</i></a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tarea in tareas %}
-                        <tr>
-                            <td>{{tarea.fecha|date('d/m/Y')}}</td>
-                            <td>{{tarea.tarea}}</td>
-                            <td>{{tarea.horaInicio|date('H:i')}}</td>
-                            <td>{{tarea.horaFin|date('H:i')}}</td>
-                            <td>{{tarea.horaInvertida|date('H:i')}}</td>
-                            <td>{{tarea.idTipoRequerimiento}}</td>
-                            <td>{% if tarea.idRequerimiento is not empty %}{{tarea.idRequerimiento.codigo}}{% endif %}</td>
-                            <td>{{tarea.idArea.area}}</td>
-                            <td>
-                                <a class="btn-floating waves-effect waves-light cyan" type="button" href="{{path('tarea_edit',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">mode_edit</i></a>
-                                <a class="btn-floating waves-effect waves-light red" type="button" href="{{path('tarea_delete',{'_id_tarea':tarea.idTarea})}}"><i class="material-icons">clear</i></a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>    
-    </div>           
+    </div>     
 {% endblock %}
 
 {% block javascripts %}
-    {#<script type="text/javascript" language="javascript" class="init">
+    <script type="text/javascript" language="javascript" class="init">
             var editor; // use a global for the submit and return data rendering in the examples
             $(document).ready(function() {
-                console.log({{tareas|json_encode()}});
                 
                 $('#example').DataTable( {
-                    data: {{tareas|json_encode()}},
+                    ajax: "{{path('consulta_tareas_usuario')}}",
                     language:{
                         select: {
                             rows: {
@@ -108,18 +68,54 @@
                     },
                     dom: "Bfrtip",
                     columns: [
-                        { data: "fecha" },
+                        { 
+                            data: "fecha.date",
+                            render: function (val, type, row) {
+                                var date = new Date(val);
+                                return  (date.getUTCDate()) + "-" + (date.getUTCMonth()) + "-" + date.getFullYear();
+                            }
+                           
+                        },
                         { data: "tarea" },
-                        { data: "hora_inicio" },
-                        { data: "hora_fin" },
-                        { data: "hora_invertida" },
-                        { data: "tipo_requerimiento" },
-                        { data: "requerimiento" },
-                        { data: "area" }
+                        { 
+                            data: "horaInicio.date",
+                            render: function (val, type, row) {
+                                var date = new Date(val);
+                                return  (date.getHours()) + ":" + (date.getUTCMinutes());
+                            }
+                        },
+                        { 
+                            data: "horaFin.date",
+                            render: function (val, type, row) {
+                                var date = new Date(val);
+                                return  (date.getHours()) + ":" + (date.getUTCMinutes());
+                            }
+                        },
+                        { 
+                            data: "horaInvertida.date",
+                            render: function (val, type, row) {
+                                var date = new Date(val);
+                                return  (date.getHours()) + ":" + (date.getUTCMinutes());
+                            }
+                        },
+                        { data: "tipoRequerimiento" },
+                        { data: "req" },
+                        { data: "area" },
+                        { 
+                            data: null,
+                            orderable: false,
+                            className: "center",
+                            defaultContent: '<a href="" type="button"><i class="material-icons tiny">mode_edit</i></a>\n\
+                                            <a href="" type="button"><i class="material-icons tiny">clear</i></a>',
+                            render: function (val, type, row) {
+                                return '<a href="/tareas/edit/' + row.id + '" type="button"><i class="material-icons tiny">mode_edit</i></a>\n\
+                                        <a href="/tareas/delete/' + row.id + '"type="button"><i class="material-icons tiny">clear</i></a>';
+                            }                
+                        }
                         
                     ],
                     select: true,
                 } );
             } );
-    </script>#}
+    </script>
 {% endblock %}    

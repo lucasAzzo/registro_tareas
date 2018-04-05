@@ -31,14 +31,7 @@ class TareaController extends Controller {
      */
     public function indexAction(Request $request) {
 
-        $em = $this->getDoctrine()->getManager();
-        
-        $usr= $this->get('security.token_storage')->getToken()->getUser();
-        
-        $tareas = $em->getRepository(Tarea::class)->findBy(['idUsuario' => $usr],['fecha' => 'DESC', 'horaInicio' => 'DESC']);
-        
         return $this->render('tarea/index.html.twig', [
-                    'tareas' => $tareas,
         ]);
     }
     

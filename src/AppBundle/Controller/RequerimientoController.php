@@ -30,11 +30,7 @@ class RequerimientoController extends Controller {
      */
     public function indexAction(Request $request) {
 
-        $em = $this->getDoctrine()->getManager();
-        $requerimientos = $em->getRepository(Requerimiento::class)->findAll();
-
         return $this->render('requerimiento/index.html.twig', [
-                    'requerimientos' => $requerimientos,
         ]);
     }
 
@@ -119,6 +115,13 @@ class RequerimientoController extends Controller {
         $formulario->handleRequest($request);
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
+            
+            /* */
+            $tareas_vinculadas = $em->getRepository('AppBundle:Tarea')->findBy(['idRequerimiento' => $requerimiento]);
+            foreach ($tareas_vinculadas as $t) {
+                $t->setIdArea($requerimiento->getIdArea());
+                $em->persist($t);
+            }
 
             $em->persist($requerimiento);
             $em->flush();
